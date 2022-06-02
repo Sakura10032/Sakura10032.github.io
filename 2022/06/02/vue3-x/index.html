@@ -1,0 +1,687 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="嘟嘟噜"><meta name="copyright" content="嘟嘟噜"><meta name="generator" content="Hexo 6.2.0"><meta name="theme" content="hexo-theme-yun"><title>vue3.x 笔记分享 | 不二家的小站</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.3.3/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="https://fastly.jsdelivr.net/npm/@unocss/runtime/mini.global.js"></script><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"sakura10032.github.io","root":"/","title":"不二家","version":"1.10.3","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"fireworks":{"colors":null},"vendors":{"darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><script>(function(){
+  var bp = document.createElement('script');
+  var curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else {
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();</script><!-- Google Tag Manager --><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-M9KWR9L');</script><!-- End Google Tag Manager --><meta name="description" content="Vue3 快速上手 1.Vue3 简介 2020 年 9 月 18 日，Vue.js 发布 3.0 版本，代号：One Piece（海贼王） 耗时 2 年多、2600+次提交、30+个 RFC、600+次 PR、99 位贡献者 github 上的 tags 地址：https:&#x2F;&#x2F;github.com&#x2F;vuejs&#x2F;vue-next&#x2F;releases&#x2F;tag&#x2F;v3.0.0  2.Vue3 带来了什么1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue3.x 笔记分享">
+<meta property="og:url" content="https://sakura10032.github.io/2022/06/02/vue3-x/index.html">
+<meta property="og:site_name" content="不二家的小站">
+<meta property="og:description" content="Vue3 快速上手 1.Vue3 简介 2020 年 9 月 18 日，Vue.js 发布 3.0 版本，代号：One Piece（海贼王） 耗时 2 年多、2600+次提交、30+个 RFC、600+次 PR、99 位贡献者 github 上的 tags 地址：https:&#x2F;&#x2F;github.com&#x2F;vuejs&#x2F;vue-next&#x2F;releases&#x2F;tag&#x2F;v3.0.0  2.Vue3 带来了什么1">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://user-images.githubusercontent.com/499550/93624428-53932780-f9ae-11ea-8d16-af949e16a09f.png">
+<meta property="og:image" content="https://cn.vitejs.dev/assets/bundler.37740380.png">
+<meta property="og:image" content="https://cn.vitejs.dev/assets/esm.3070012d.png">
+<meta property="og:image" content="https://cn.vuejs.org/images/lifecycle.png">
+<meta property="og:image" content="https://v3.cn.vuejs.org/images/lifecycle.svg">
+<meta property="og:image" content="https://v3.cn.vuejs.org/images/components_provide.png">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f84e4e2c02424d9a99862ade0a2e4114~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e5ac7e20d1784887a826f6360768a368~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bc0be8211fc54b6c941c036791ba4efe~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6cc55165c0e34069a75fe36f8712eb80~tplv-k3u1fbpfcp-watermark.image">
+<meta property="article:published_time" content="2022-06-02T05:39:18.000Z">
+<meta property="article:modified_time" content="2022-06-02T05:42:07.339Z">
+<meta property="article:author" content="嘟嘟噜">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="学习">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/499550/93624428-53932780-f9ae-11ea-8d16-af949e16a09f.png"><script>(function() {
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script></head><body><script src="https://code.iconify.design/2/2.1.1/iconify.min.js"></script><script>// Define global variable
+IconifyProviders = {
+  // Empty prefix: overwrite default API provider configuration
+  '': {
+    // Use custom API first, use Iconify public API as backup
+    resources: [
+        'https://api.iconify.design',
+    ],
+    // Wait for 1 second before switching API hosts
+    rotate: 1000,
+  },
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="Table of Contents"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="Overview"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="嘟嘟噜"><img width="96" loading="lazy" src="/images/avatar.jpg" alt="嘟嘟噜"><span class="site-author-status" title="Looking for dawn.">🌑</span></a><div class="site-author-name"><a href="/about/">嘟嘟噜</a></div><span class="site-name">不二家的小站</span><sub class="site-subtitle"></sub><div class="site-description"></div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="Home"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="Archives"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">4</span></a></div><div class="site-state-item"><a href="/categories/" title="Categories"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">1</span></a></div><div class="site-state-item"><a href="/tags/" title="Tags"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">4</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:clipboard-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="/atom.xml" title="RSS" target="_blank" style="color:orange"><span class="icon iconify" data-icon="ri:rss-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/Sakura10032" title="GitHub" target="_blank" style="color:#6e5494"><span class="icon iconify" data-icon="ri:github-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:wuliuqi10032@163.com" title="E-Mail" target="_blank" style="color:#8E71C1"><span class="icon iconify" data-icon="ri:mail-line"></span></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vue3-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B"><span class="toc-number">1.</span> <span class="toc-text">Vue3 快速上手</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Vue3-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">1.Vue3 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Vue3-%E5%B8%A6%E6%9D%A5%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-number">1.2.</span> <span class="toc-text">2.Vue3 带来了什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%80%A7%E8%83%BD%E7%9A%84%E6%8F%90%E5%8D%87"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.性能的提升</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%BA%90%E7%A0%81%E7%9A%84%E5%8D%87%E7%BA%A7"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.源码的升级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%8B%A5%E6%8A%B1-TypeScript"><span class="toc-number">1.2.3.</span> <span class="toc-text">3.拥抱 TypeScript</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%96%B0%E7%9A%84%E7%89%B9%E6%80%A7"><span class="toc-number">1.2.4.</span> <span class="toc-text">4.新的特性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%88%9B%E5%BB%BA-Vue3-0-%E5%B7%A5%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">一、创建 Vue3.0 工程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8-vue-cli-%E5%88%9B%E5%BB%BA"><span class="toc-number">2.1.</span> <span class="toc-text">1.使用 vue-cli 创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8-vite-%E5%88%9B%E5%BB%BA"><span class="toc-number">2.2.</span> <span class="toc-text">2.使用 vite 创建</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%B8%B8%E7%94%A8-Composition-API"><span class="toc-number">3.</span> <span class="toc-text">二、常用 Composition API</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%8B%89%E5%BC%80%E5%BA%8F%E5%B9%95%E7%9A%84-setup"><span class="toc-number">3.1.</span> <span class="toc-text">1.拉开序幕的 setup</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-ref-%E5%87%BD%E6%95%B0"><span class="toc-number">3.2.</span> <span class="toc-text">2.ref 函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-reactive-%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.</span> <span class="toc-text">3.reactive 函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Vue3-0-%E4%B8%AD%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86"><span class="toc-number">3.4.</span> <span class="toc-text">4.Vue3.0 中的响应式原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vue2-x-%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F"><span class="toc-number">3.4.1.</span> <span class="toc-text">vue2.x 的响应式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue3-0-%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F"><span class="toc-number">3.4.2.</span> <span class="toc-text">Vue3.0 的响应式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-reactive-%E5%AF%B9%E6%AF%94-ref"><span class="toc-number">3.5.</span> <span class="toc-text">5.reactive 对比 ref</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-setup-%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">3.6.</span> <span class="toc-text">6.setup 的两个注意点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%E4%B8%8E%E7%9B%91%E8%A7%86"><span class="toc-number">3.7.</span> <span class="toc-text">7.计算属性与监视</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-computed-%E5%87%BD%E6%95%B0"><span class="toc-number">3.7.1.</span> <span class="toc-text">1.computed 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-watch-%E5%87%BD%E6%95%B0"><span class="toc-number">3.7.2.</span> <span class="toc-text">2.watch 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-watchEffect-%E5%87%BD%E6%95%B0"><span class="toc-number">3.7.3.</span> <span class="toc-text">3.watchEffect 函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">3.8.</span> <span class="toc-text">8.生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E8%87%AA%E5%AE%9A%E4%B9%89-hook-%E5%87%BD%E6%95%B0"><span class="toc-number">3.9.</span> <span class="toc-text">9.自定义 hook 函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-toRef"><span class="toc-number">3.10.</span> <span class="toc-text">10.toRef</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%85%B6%E5%AE%83-Composition-API"><span class="toc-number">4.</span> <span class="toc-text">三、其它 Composition API</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-shallowReactive-%E4%B8%8E-shallowRef"><span class="toc-number">4.1.</span> <span class="toc-text">1.shallowReactive 与 shallowRef</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-readonly-%E4%B8%8E-shallowReadonly"><span class="toc-number">4.2.</span> <span class="toc-text">2.readonly 与 shallowReadonly</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-toRaw-%E4%B8%8E-markRaw"><span class="toc-number">4.3.</span> <span class="toc-text">3.toRaw 与 markRaw</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-customRef"><span class="toc-number">4.4.</span> <span class="toc-text">4.customRef</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-provide-%E4%B8%8E-inject"><span class="toc-number">4.5.</span> <span class="toc-text">5.provide 与 inject</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%93%8D%E5%BA%94%E5%BC%8F%E6%95%B0%E6%8D%AE%E7%9A%84%E5%88%A4%E6%96%AD"><span class="toc-number">4.6.</span> <span class="toc-text">6.响应式数据的判断</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Composition-API-%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">5.</span> <span class="toc-text">四、Composition API 的优势</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Options-API-%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">5.1.</span> <span class="toc-text">1.Options API 存在的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Composition-API-%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">5.2.</span> <span class="toc-text">2.Composition API 的优势</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%96%B0%E7%9A%84%E7%BB%84%E4%BB%B6"><span class="toc-number">6.</span> <span class="toc-text">五、新的组件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Fragment"><span class="toc-number">6.1.</span> <span class="toc-text">1.Fragment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Teleport"><span class="toc-number">6.2.</span> <span class="toc-text">2.Teleport</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Suspense"><span class="toc-number">6.3.</span> <span class="toc-text">3.Suspense</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%85%B6%E4%BB%96"><span class="toc-number">7.</span> <span class="toc-text">六、其他</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%85%A8%E5%B1%80-API-%E7%9A%84%E8%BD%AC%E7%A7%BB"><span class="toc-number">7.1.</span> <span class="toc-text">1.全局 API 的转移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%85%B6%E4%BB%96%E6%94%B9%E5%8F%98"><span class="toc-number">7.2.</span> <span class="toc-text">2.其他改变</span></a></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="https://sakura10032.github.io/2022/06/02/vue3-x/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="嘟嘟噜"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="不二家的小站"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">vue3.x 笔记分享<a class="post-edit-link" href="https://github.com/Sakura10032/sakura10032.github.io/tree/hexo/source/_posts/2022-06-02-vue3-x.md" target="_blank" title="Edit this post" rel="noopener"><span class="icon iconify" data-icon="ri:edit-line"></span></a></h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="Created: 2022-06-02 13:39:18" itemprop="dateCreated datePublished" datetime="2022-06-02T13:39:18+08:00">2022-06-02</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><span class="icon iconify" data-icon="ri:folder-line"></span></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/%E5%89%8D%E7%AB%AF/" style="--text-color:#FB7299" itemprop="url" rel="index"><span itemprop="text">前端</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/%E7%AC%94%E8%AE%B0/" style="--text-color:dimgray"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">笔记</span></a><a class="tag-item" href="/tags/%E5%AD%A6%E4%B9%A0/" style="--text-color:saddlebrown"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">学习</span></a><a class="tag-item" href="/tags/Vue/" style="--text-color:#bfa"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">Vue</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><h1 id="Vue3-快速上手"><a href="#Vue3-快速上手" class="headerlink" title="Vue3 快速上手"></a><a href="#vue3%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B">Vue3 快速上手</a></h1><p><img src="https://user-images.githubusercontent.com/499550/93624428-53932780-f9ae-11ea-8d16-af949e16a09f.png" alt="img" loading="lazy"></p>
+<h2 id="1-Vue3-简介"><a href="#1-Vue3-简介" class="headerlink" title="1.Vue3 简介"></a><a href="#_1vue3%E7%AE%80%E4%BB%8B">1.Vue3 简介</a></h2><ul>
+<li>2020 年 9 月 18 日，Vue.js 发布 3.0 版本，代号：One Piece（海贼王）</li>
+<li>耗时 2 年多、<a target="_blank" rel="noopener" href="https://github.com/vuejs/vue-next/graphs/commit-activity">2600+次提交</a>、<a target="_blank" rel="noopener" href="https://github.com/vuejs/rfcs/tree/master/active-rfcs">30+个 RFC</a>、<a target="_blank" rel="noopener" href="https://github.com/vuejs/vue-next/pulls?q=is:pr+is:merged+-author:app/dependabot-preview+">600+次 PR</a>、<a target="_blank" rel="noopener" href="https://github.com/vuejs/vue-next/graphs/contributors">99 位贡献者</a></li>
+<li>github 上的 tags 地址：<a target="_blank" rel="noopener" href="https://github.com/vuejs/vue-next/releases/tag/v3.0.0">https://github.com/vuejs/vue-next/releases/tag/v3.0.0</a></li>
+</ul>
+<h2 id="2-Vue3-带来了什么"><a href="#2-Vue3-带来了什么" class="headerlink" title="2.Vue3 带来了什么"></a><a href="#_2vue3%E5%B8%A6%E6%9D%A5%E4%BA%86%E4%BB%80%E4%B9%88">2.Vue3 带来了什么</a></h2><h3 id="1-性能的提升"><a href="#1-性能的提升" class="headerlink" title="1.性能的提升"></a><a href="#_1%E6%80%A7%E8%83%BD%E7%9A%84%E6%8F%90%E5%8D%87">1.性能的提升</a></h3><ul>
+<li><p>打包大小减少 41%</p>
+</li>
+<li><p>初次渲染快 55%, 更新渲染快 133%</p>
+</li>
+<li><p>内存减少 54%</p>
+<p>……</p>
+</li>
+</ul>
+<h3 id="2-源码的升级"><a href="#2-源码的升级" class="headerlink" title="2.源码的升级"></a><a href="#_2%E6%BA%90%E7%A0%81%E7%9A%84%E5%8D%87%E7%BA%A7">2.源码的升级</a></h3><ul>
+<li><p>使用 Proxy 代替 defineProperty 实现响应式</p>
+</li>
+<li><p>重写虚拟 DOM 的实现和 Tree-Shaking</p>
+<p>……</p>
+</li>
+</ul>
+<h3 id="3-拥抱-TypeScript"><a href="#3-拥抱-TypeScript" class="headerlink" title="3.拥抱 TypeScript"></a><a href="#_3%E6%8B%A5%E6%8A%B1typescript">3.拥抱 TypeScript</a></h3><ul>
+<li>Vue3 可以更好的支持 TypeScript</li>
+</ul>
+<h3 id="4-新的特性"><a href="#4-新的特性" class="headerlink" title="4.新的特性"></a><a href="#_4%E6%96%B0%E7%9A%84%E7%89%B9%E6%80%A7">4.新的特性</a></h3><ol>
+<li>Composition API（组合 API）<ul>
+<li>setup 配置</li>
+<li>ref 与 reactive</li>
+<li>watch 与 watchEffect</li>
+<li>provide 与 inject</li>
+<li>……</li>
+</ul>
+</li>
+<li>新的内置组件<ul>
+<li>Fragment</li>
+<li>Teleport</li>
+<li>Suspense</li>
+</ul>
+</li>
+<li>其他改变<ul>
+<li>新的生命周期钩子</li>
+<li>data 选项应始终被声明为一个函数</li>
+<li>移除 keyCode 支持作为 v-on 的修饰符</li>
+<li>……</li>
+</ul>
+</li>
+</ol>
+<h1 id="一、创建-Vue3-0-工程"><a href="#一、创建-Vue3-0-工程" class="headerlink" title="一、创建 Vue3.0 工程"></a><a href="#%E4%B8%80%E3%80%81%E5%88%9B%E5%BB%BAvue30%E5%B7%A5%E7%A8%8B">一、创建 Vue3.0 工程</a></h1><h2 id="1-使用-vue-cli-创建"><a href="#1-使用-vue-cli-创建" class="headerlink" title="1.使用 vue-cli 创建"></a><a href="#_1%E4%BD%BF%E7%94%A8-vue-cli-%E5%88%9B%E5%BB%BA">1.使用 vue-cli 创建</a></h2><p>官方文档：<a target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/guide/creating-a-project.html#vue-create">https://cli.vuejs.org/zh/guide/creating-a-project.html#vue-create</a></p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 查看@vue/cli版本，确保@vue/cli版本在4.5.0以上</span>
+vue --version
+<span class="token comment">## 安装或者升级你的@vue/cli</span>
+<span class="token function">npm</span> <span class="token function">install</span> -g @vue/cli
+<span class="token comment">## 创建</span>
+vue create vue_test
+<span class="token comment">## 启动</span>
+<span class="token builtin class-name">cd</span> vue_test
+<span class="token function">npm</span> run serveCopy to clipboardErrorCopied</code></pre>
+
+<h2 id="2-使用-vite-创建"><a href="#2-使用-vite-创建" class="headerlink" title="2.使用 vite 创建"></a><a href="#_2%E4%BD%BF%E7%94%A8-vite-%E5%88%9B%E5%BB%BA">2.使用 vite 创建</a></h2><p>官方文档：<a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/guide/installation.html#vite">https://v3.cn.vuejs.org/guide/installation.html#vite</a></p>
+<p>vite 官网：<a target="_blank" rel="noopener" href="https://vitejs.cn/">https://vitejs.cn</a></p>
+<ul>
+<li>什么是 vite？—— 新一代前端构建工具。</li>
+<li>优势如下：<ul>
+<li>开发环境中，无需打包操作，可快速的冷启动。</li>
+<li>轻量快速的热重载（HMR）。</li>
+<li>真正的按需编译，不再等待整个应用编译完成。</li>
+</ul>
+</li>
+<li>传统构建 与 vite 构建对比图</li>
+</ul>
+<p><img src="https://cn.vitejs.dev/assets/bundler.37740380.png" alt="img" loading="lazy"><img src="https://cn.vitejs.dev/assets/esm.3070012d.png" alt="img" loading="lazy"></p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 创建工程</span>
+<span class="token function">npm</span> init vite-app <span class="token operator">&lt;</span>project-name<span class="token operator">></span>
+<span class="token comment">## 进入工程目录</span>
+<span class="token builtin class-name">cd</span> <span class="token operator">&lt;</span>project-name<span class="token operator">></span>
+<span class="token comment">## 安装依赖</span>
+<span class="token function">npm</span> <span class="token function">install</span>
+<span class="token comment">## 运行</span>
+<span class="token function">npm</span> run devCopy to clipboardErrorCopied</code></pre>
+
+<h1 id="二、常用-Composition-API"><a href="#二、常用-Composition-API" class="headerlink" title="二、常用 Composition API"></a><a href="#%E4%BA%8C%E3%80%81%E5%B8%B8%E7%94%A8-composition-api">二、常用 Composition API</a></h1><p>官方文档: <a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/guide/composition-api-introduction.html">https://v3.cn.vuejs.org/guide/composition-api-introduction.html</a></p>
+<h2 id="1-拉开序幕的-setup"><a href="#1-拉开序幕的-setup" class="headerlink" title="1.拉开序幕的 setup"></a><a href="#_1%E6%8B%89%E5%BC%80%E5%BA%8F%E5%B9%95%E7%9A%84setup">1.拉开序幕的 setup</a></h2><ol>
+<li>理解：Vue3.0 中一个新的配置项，值为一个函数。</li>
+<li>setup 是所有**Composition API（组合 API）***“ 表演的舞台 ”*。</li>
+<li>组件中所用到的：数据、方法等等，均要配置在 setup 中。</li>
+<li>setup 函数的两种返回值：<ol>
+<li>若返回一个对象，则对象中的属性、方法, 在模板中均可以直接使用。（重点关注！）</li>
+<li>若返回一个渲染函数：则可以自定义渲染内容。（了解）</li>
+</ol>
+</li>
+<li>注意点：<ol>
+<li>尽量不要与 Vue2.x 配置混用<ul>
+<li>Vue2.x 配置（data、methos、computed…）中<strong>可以访问到</strong>setup 中的属性、方法。</li>
+<li>但在 setup 中<strong>不能访问到</strong>Vue2.x 配置（data、methos、computed…）。</li>
+<li>如果有重名, setup 优先。</li>
+</ul>
+</li>
+<li>setup 不能是一个 async 函数，因为返回值不再是 return 的对象, 而是 promise, 模板看不到 return 对象中的属性。（后期也可以返回一个 Promise 实例，但需要 Suspense 和异步组件的配合）</li>
+</ol>
+</li>
+</ol>
+<h2 id="2-ref-函数"><a href="#2-ref-函数" class="headerlink" title="2.ref 函数"></a><a href="#_2ref%E5%87%BD%E6%95%B0">2.ref 函数</a></h2><ul>
+<li><p>作用: 定义一个响应式的数据</p>
+</li>
+<li><p>语法:</p>
+<pre class="language-none"><code class="language-none">const xxx &#x3D; ref(initValue)</code></pre>
+
+<ul>
+<li>创建一个包含响应式数据的<strong>引用对象（reference 对象，简称 ref 对象）</strong>。</li>
+<li>JS 中操作数据： <code>xxx.value</code></li>
+<li>模板中读取数据: 不需要.value，直接：<code>&lt;div&gt;&#123;&#123;xxx&#125;&#125;&lt;/div&gt;</code></li>
+</ul>
+</li>
+<li><p>备注：</p>
+<ul>
+<li>接收的数据可以是：基本类型、也可以是对象类型。</li>
+<li>基本类型的数据：响应式依然是靠<code>Object.defineProperty()</code>的<code>get</code>与<code>set</code>完成的。</li>
+<li>对象类型的数据：内部 <em>“ 求助 ”</em> 了 Vue3.0 中的一个新函数—— <code>reactive</code>函数。</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-reactive-函数"><a href="#3-reactive-函数" class="headerlink" title="3.reactive 函数"></a><a href="#_3reactive%E5%87%BD%E6%95%B0">3.reactive 函数</a></h2><ul>
+<li>作用: 定义一个<strong>对象类型</strong>的响应式数据（基本类型不要用它，要用<code>ref</code>函数）</li>
+<li>语法：<code>const 代理对象= reactive(源对象)</code>接收一个对象（或数组），返回一个<strong>代理对象（Proxy 的实例对象，简称 proxy 对象）</strong></li>
+<li>reactive 定义的响应式数据是“深层次的”。</li>
+<li>内部基于 ES6 的 Proxy 实现，通过代理对象操作源对象内部数据进行操作。</li>
+</ul>
+<h2 id="4-Vue3-0-中的响应式原理"><a href="#4-Vue3-0-中的响应式原理" class="headerlink" title="4.Vue3.0 中的响应式原理"></a><a href="#_4vue30%E4%B8%AD%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86">4.Vue3.0 中的响应式原理</a></h2><h3 id="vue2-x-的响应式"><a href="#vue2-x-的响应式" class="headerlink" title="vue2.x 的响应式"></a><a href="#vue2x%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F">vue2.x 的响应式</a></h3><ul>
+<li><p>实现原理：</p>
+<ul>
+<li><p>对象类型：通过<code>Object.defineProperty()</code>对属性的读取、修改进行拦截（数据劫持）。</p>
+</li>
+<li><p>数组类型：通过重写更新数组的一系列方法来实现拦截。（对数组的变更方法进行了包裹）。</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript">Object<span class="token punctuation">.</span><span class="token function">defineProperty</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token string">'count'</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">get</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function">set</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>Copy to clipboardErrorCopied</code></pre></li>
+</ul>
+</li>
+<li><p>存在问题：</p>
+<ul>
+<li>新增属性、删除属性, 界面不会更新。</li>
+<li>直接通过下标修改数组, 界面不会自动更新。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Vue3-0-的响应式"><a href="#Vue3-0-的响应式" class="headerlink" title="Vue3.0 的响应式"></a><a href="#vue30%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F">Vue3.0 的响应式</a></h3><ul>
+<li><p>实现原理:</p>
+<ul>
+<li><p>通过 Proxy（代理）: 拦截对象中任意属性的变化, 包括：属性值的读写、属性的添加、属性的删除等。</p>
+</li>
+<li><p>通过 Reflect（反射）: 对源对象的属性进行操作。</p>
+</li>
+<li><p>MDN 文档中描述的 Proxy 与 Reflect：</p>
+<ul>
+<li><p>Proxy：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy</a></p>
+</li>
+<li><p>Reflect：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect</a></p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">new</span> <span class="token class-name">Proxy</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 拦截读取属性值</span>
+    <span class="token function">get</span> <span class="token punctuation">(</span>target<span class="token punctuation">,</span> prop<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> Reflect<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> prop<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token comment">// 拦截设置属性值或添加新属性</span>
+    <span class="token function">set</span> <span class="token punctuation">(</span>target<span class="token punctuation">,</span> prop<span class="token punctuation">,</span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> Reflect<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> prop<span class="token punctuation">,</span> value<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token comment">// 拦截删除属性</span>
+    <span class="token function">deleteProperty</span> <span class="token punctuation">(</span><span class="token parameter">target<span class="token punctuation">,</span> prop</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> Reflect<span class="token punctuation">.</span><span class="token function">deleteProperty</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> prop<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+proxy<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'tom'</span>   Copy to clipboardErrorCopied</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="5-reactive-对比-ref"><a href="#5-reactive-对比-ref" class="headerlink" title="5.reactive 对比 ref"></a><a href="#_5reactive%E5%AF%B9%E6%AF%94ref">5.reactive 对比 ref</a></h2><ul>
+<li>从定义数据角度对比：<ul>
+<li>ref 用来定义：<strong>基本类型数据</strong>。</li>
+<li>reactive 用来定义：<strong>对象（或数组）类型数据</strong>。</li>
+<li>备注：ref 也可以用来定义<strong>对象（或数组）类型数据</strong>, 它内部会自动通过<code>reactive</code>转为<strong>代理对象</strong>。</li>
+</ul>
+</li>
+<li>从原理角度对比：<ul>
+<li>ref 通过<code>Object.defineProperty()</code>的<code>get</code>与<code>set</code>来实现响应式（数据劫持）。</li>
+<li>reactive 通过使用<strong>Proxy</strong>来实现响应式（数据劫持）, 并通过<strong>Reflect</strong>操作<strong>源对象</strong>内部的数据。</li>
+</ul>
+</li>
+<li>从使用角度对比：<ul>
+<li>ref 定义的数据：操作数据<strong>需要</strong><code>.value</code>，读取数据时模板中直接读取<strong>不需要</strong><code>.value</code>。</li>
+<li>reactive 定义的数据：操作数据与读取数据：<strong>均不需要</strong><code>.value</code>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-setup-的两个注意点"><a href="#6-setup-的两个注意点" class="headerlink" title="6.setup 的两个注意点"></a><a href="#_6setup%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%B3%A8%E6%84%8F%E7%82%B9">6.setup 的两个注意点</a></h2><ul>
+<li>setup 执行的时机<ul>
+<li>在 beforeCreate 之前执行一次，this 是 undefined。</li>
+</ul>
+</li>
+<li>setup 的参数<ul>
+<li>props：值为对象，包含：组件外部传递过来，且组件内部声明接收了的属性。</li>
+<li>context：上下文对象<ul>
+<li>attrs: 值为对象，包含：组件外部传递过来，但没有在 props 配置中声明的属性, 相当于 <code>this.$attrs</code>。</li>
+<li>slots: 收到的插槽内容, 相当于 <code>this.$slots</code>。</li>
+<li>emit: 分发自定义事件的函数, 相当于 <code>this.$emit</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="7-计算属性与监视"><a href="#7-计算属性与监视" class="headerlink" title="7.计算属性与监视"></a><a href="#_7%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%E4%B8%8E%E7%9B%91%E8%A7%86">7.计算属性与监视</a></h2><h3 id="1-computed-函数"><a href="#1-computed-函数" class="headerlink" title="1.computed 函数"></a><a href="#_1computed%E5%87%BD%E6%95%B0">1.computed 函数</a></h3><ul>
+<li><p>与 Vue2.x 中 computed 配置功能一致</p>
+</li>
+<li><p>写法</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span>computed<span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'vue'</span>
+
+<span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token operator">...</span>
+    <span class="token comment">//计算属性——简写</span>
+    <span class="token keyword">let</span> fullName <span class="token operator">=</span> <span class="token function">computed</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> person<span class="token punctuation">.</span>firstName <span class="token operator">+</span> <span class="token string">'-'</span> <span class="token operator">+</span> person<span class="token punctuation">.</span>lastName
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token comment">//计算属性——完整</span>
+    <span class="token keyword">let</span> fullName <span class="token operator">=</span> <span class="token function">computed</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+        <span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> person<span class="token punctuation">.</span>firstName <span class="token operator">+</span> <span class="token string">'-'</span> <span class="token operator">+</span> person<span class="token punctuation">.</span>lastName
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token function">set</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">const</span> nameArr <span class="token operator">=</span> value<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">'-'</span><span class="token punctuation">)</span>
+            person<span class="token punctuation">.</span>firstName <span class="token operator">=</span> nameArr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+            person<span class="token punctuation">.</span>lastName <span class="token operator">=</span> nameArr<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>Copy to clipboardErrorCopied</code></pre></li>
+</ul>
+<h3 id="2-watch-函数"><a href="#2-watch-函数" class="headerlink" title="2.watch 函数"></a><a href="#_2watch%E5%87%BD%E6%95%B0">2.watch 函数</a></h3><ul>
+<li><p>与 Vue2.x 中 watch 配置功能一致</p>
+</li>
+<li><p>两个小“坑”：</p>
+<ul>
+<li>监视 reactive 定义的响应式数据时：oldValue 无法正确获取、强制开启了深度监视（deep 配置失效）。</li>
+<li>监视 reactive 定义的响应式数据中某个属性时：deep 配置有效。</li>
+</ul>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//情况一：监视ref定义的响应式数据</span>
+<span class="token function">watch</span><span class="token punctuation">(</span>
+  sum<span class="token punctuation">,</span>
+  <span class="token punctuation">(</span><span class="token parameter">newValue<span class="token punctuation">,</span> oldValue</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'sum变化了'</span><span class="token punctuation">,</span> newValue<span class="token punctuation">,</span> oldValue<span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span> <span class="token literal-property property">immediate</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment">//情况二：监视多个ref定义的响应式数据</span>
+<span class="token function">watch</span><span class="token punctuation">(</span><span class="token punctuation">[</span>sum<span class="token punctuation">,</span> msg<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">newValue<span class="token punctuation">,</span> oldValue</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'sum或msg变化了'</span><span class="token punctuation">,</span> newValue<span class="token punctuation">,</span> oldValue<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment">/* 情况三：监视reactive定义的响应式数据
+            若watch监视的是reactive定义的响应式数据，则无法正确获得oldValue！！
+            若watch监视的是reactive定义的响应式数据，则强制开启了深度监视 
+*/</span>
+<span class="token function">watch</span><span class="token punctuation">(</span>
+  person<span class="token punctuation">,</span>
+  <span class="token punctuation">(</span><span class="token parameter">newValue<span class="token punctuation">,</span> oldValue</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'person变化了'</span><span class="token punctuation">,</span> newValue<span class="token punctuation">,</span> oldValue<span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span> <span class="token literal-property property">immediate</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token literal-property property">deep</span><span class="token operator">:</span> <span class="token boolean">false</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">)</span> <span class="token comment">//此处的deep配置不再奏效</span>
+
+<span class="token comment">//情况四：监视reactive定义的响应式数据中的某个属性</span>
+<span class="token function">watch</span><span class="token punctuation">(</span>
+  <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> person<span class="token punctuation">.</span>job<span class="token punctuation">,</span>
+  <span class="token punctuation">(</span><span class="token parameter">newValue<span class="token punctuation">,</span> oldValue</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'person的job变化了'</span><span class="token punctuation">,</span> newValue<span class="token punctuation">,</span> oldValue<span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span> <span class="token literal-property property">immediate</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token literal-property property">deep</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment">//情况五：监视reactive定义的响应式数据中的某些属性</span>
+<span class="token function">watch</span><span class="token punctuation">(</span>
+  <span class="token punctuation">[</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> person<span class="token punctuation">.</span>job<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> person<span class="token punctuation">.</span>name<span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">(</span><span class="token parameter">newValue<span class="token punctuation">,</span> oldValue</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'person的job变化了'</span><span class="token punctuation">,</span> newValue<span class="token punctuation">,</span> oldValue<span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span> <span class="token literal-property property">immediate</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token literal-property property">deep</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment">//特殊情况</span>
+<span class="token function">watch</span><span class="token punctuation">(</span>
+  <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> person<span class="token punctuation">.</span>job<span class="token punctuation">,</span>
+  <span class="token punctuation">(</span><span class="token parameter">newValue<span class="token punctuation">,</span> oldValue</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'person的job变化了'</span><span class="token punctuation">,</span> newValue<span class="token punctuation">,</span> oldValue<span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span> <span class="token literal-property property">deep</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">)</span> <span class="token comment">//此处由于监视的是reactive素定义的对象中的某个属性，所以deep配置有效Copy to clipboardErrorCopied</span></code></pre></li>
+</ul>
+<h3 id="3-watchEffect-函数"><a href="#3-watchEffect-函数" class="headerlink" title="3.watchEffect 函数"></a><a href="#_3watcheffect%E5%87%BD%E6%95%B0">3.watchEffect 函数</a></h3><ul>
+<li><p>watch 的套路是：既要指明监视的属性，也要指明监视的回调。</p>
+</li>
+<li><p>watchEffect 的套路是：不用指明监视哪个属性，监视的回调中用到哪个属性，那就监视哪个属性。</p>
+</li>
+<li><p>watchEffect 有点像 computed：</p>
+<ul>
+<li>但 computed 注重的计算出来的值（回调函数的返回值），所以必须要写返回值。</li>
+<li>而 watchEffect 更注重的是过程（回调函数的函数体），所以不用写返回值。</li>
+</ul>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//watchEffect所指定的回调中用到的数据只要发生变化，则直接重新执行回调。</span>
+<span class="token function">watchEffect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> x1 <span class="token operator">=</span> sum<span class="token punctuation">.</span>value
+    <span class="token keyword">const</span> x2 <span class="token operator">=</span> person<span class="token punctuation">.</span>age
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'watchEffect配置的回调执行了'</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>Copy to clipboardErrorCopied</code></pre></li>
+</ul>
+<h2 id="8-生命周期"><a href="#8-生命周期" class="headerlink" title="8.生命周期"></a><a href="#_8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">8.生命周期</a></h2><p><strong>vue2.x 的生命周期</strong><img src="https://cn.vuejs.org/images/lifecycle.png" alt="lifecycle_2" loading="lazy"></p>
+<p><strong>vue3.0 的生命周期</strong><img src="https://v3.cn.vuejs.org/images/lifecycle.svg" alt="lifecycle_2" loading="lazy"></p>
+<p>1</p>
+<ul>
+<li>Vue3.0 中可以继续使用 Vue2.x 中的生命周期钩子，但有有两个被更名：<ul>
+<li><code>beforeDestroy</code>改名为 <code>beforeUnmount</code></li>
+<li><code>destroyed</code>改名为 <code>unmounted</code></li>
+</ul>
+</li>
+<li>Vue3.0 也提供了 Composition API 形式的生命周期钩子，与 Vue2.x 中钩子对应关系如下：<ul>
+<li><code>beforeCreate</code>&#x3D;&#x3D;&#x3D;&gt;<code>setup()</code></li>
+<li><code>created</code>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;<code>setup()</code></li>
+<li><code>beforeMount</code> &#x3D;&#x3D;&#x3D;&gt;<code>onBeforeMount</code></li>
+<li><code>mounted</code>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;<code>onMounted</code></li>
+<li><code>beforeUpdate</code>&#x3D;&#x3D;&#x3D;&gt;<code>onBeforeUpdate</code></li>
+<li><code>updated</code> &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;<code>onUpdated</code></li>
+<li><code>beforeUnmount</code> &#x3D;&#x3D;&gt;<code>onBeforeUnmount</code></li>
+<li><code>unmounted</code> &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;<code>onUnmounted</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="9-自定义-hook-函数"><a href="#9-自定义-hook-函数" class="headerlink" title="9.自定义 hook 函数"></a><a href="#_9%E8%87%AA%E5%AE%9A%E4%B9%89hook%E5%87%BD%E6%95%B0">9.自定义 hook 函数</a></h2><ul>
+<li>什么是 hook？—— 本质是一个函数，把 setup 函数中使用的 Composition API 进行了封装。</li>
+<li>类似于 vue2.x 中的 mixin。</li>
+<li>自定义 hook 的优势: 复用代码, 让 setup 中的逻辑更清楚易懂。</li>
+</ul>
+<h2 id="10-toRef"><a href="#10-toRef" class="headerlink" title="10.toRef"></a><a href="#_10toref">10.toRef</a></h2><ul>
+<li><p>作用：创建一个 ref 对象，其 value 值指向另一个对象中的某个属性。</p>
+</li>
+<li><p>语法：<code>const name = toRef(person,&#39;name&#39;)</code></p>
+</li>
+<li><p>应用: 要将响应式对象中的某个属性单独提供给外部使用时。</p>
+</li>
+<li><p>扩展：<code>toRefs</code> 与<code>toRef</code>功能一致，但可以批量创建多个 ref 对象，语法：<code>toRefs(person)</code></p>
+</li>
+</ul>
+<h1 id="三、其它-Composition-API"><a href="#三、其它-Composition-API" class="headerlink" title="三、其它 Composition API"></a><a href="#%E4%B8%89%E3%80%81%E5%85%B6%E5%AE%83-composition-api">三、其它 Composition API</a></h1><h2 id="1-shallowReactive-与-shallowRef"><a href="#1-shallowReactive-与-shallowRef" class="headerlink" title="1.shallowReactive 与 shallowRef"></a><a href="#_1shallowreactive-%E4%B8%8E-shallowref">1.shallowReactive 与 shallowRef</a></h2><ul>
+<li>shallowReactive：只处理对象最外层属性的响应式（浅响应式）。</li>
+<li>shallowRef：只处理基本数据类型的响应式, 不进行对象的响应式处理。</li>
+<li>什么时候使用?<ul>
+<li>如果有一个对象数据，结构比较深, 但变化时只是外层属性变化 &#x3D;&#x3D;&#x3D;&gt; shallowReactive。</li>
+<li>如果有一个对象数据，后续功能不会修改该对象中的属性，而是生新的对象来替换 &#x3D;&#x3D;&#x3D;&gt; shallowRef。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-readonly-与-shallowReadonly"><a href="#2-readonly-与-shallowReadonly" class="headerlink" title="2.readonly 与 shallowReadonly"></a><a href="#_2readonly-%E4%B8%8E-shallowreadonly">2.readonly 与 shallowReadonly</a></h2><ul>
+<li>readonly: 让一个响应式数据变为只读的（深只读）。</li>
+<li>shallowReadonly：让一个响应式数据变为只读的（浅只读）。</li>
+<li>应用场景: 不希望数据被修改时。</li>
+</ul>
+<h2 id="3-toRaw-与-markRaw"><a href="#3-toRaw-与-markRaw" class="headerlink" title="3.toRaw 与 markRaw"></a><a href="#_3toraw-%E4%B8%8E-markraw">3.toRaw 与 markRaw</a></h2><ul>
+<li>toRaw：<ul>
+<li>作用：将一个由<code>reactive</code>生成的<strong>响应式对象</strong>转为<strong>普通对象</strong>。</li>
+<li>使用场景：用于读取响应式对象对应的普通对象，对这个普通对象的所有操作，不会引起页面更新。</li>
+</ul>
+</li>
+<li>markRaw：<ul>
+<li>作用：标记一个对象，使其永远不会再成为响应式对象。</li>
+<li>应用场景:<ol>
+<li>有些值不应被设置为响应式的，例如复杂的第三方类库等。</li>
+<li>当渲染具有不可变数据源的大列表时，跳过响应式转换可以提高性能。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-customRef"><a href="#4-customRef" class="headerlink" title="4.customRef"></a><a href="#_4customref">4.customRef</a></h2><ul>
+<li><p>作用：创建一个自定义的 ref，并对其依赖项跟踪和更新触发进行显式控制。</p>
+</li>
+<li><p>实现防抖效果：</p>
+<pre class="language-vue" data-language="vue"><code class="language-vue">&lt;template&gt;
+  &lt;input type&#x3D;&quot;text&quot; v-model&#x3D;&quot;keyword&quot; &#x2F;&gt;
+  &lt;h3&gt;&#123;&#123; keyword &#125;&#125;&lt;&#x2F;h3&gt;
+&lt;&#x2F;template&gt;
+
+&lt;script&gt;
+import &#123; ref, customRef &#125; from &#39;vue&#39;
+export default &#123;
+  name: &#39;Demo&#39;,
+  setup() &#123;
+    &#x2F;&#x2F; let keyword &#x3D; ref(&#39;hello&#39;) &#x2F;&#x2F;使用Vue准备好的内置ref
+    &#x2F;&#x2F;自定义一个myRef
+    function myRef(value, delay) &#123;
+      let timer
+      &#x2F;&#x2F;通过customRef去实现自定义
+      return customRef((track, trigger) &#x3D;&gt; &#123;
+        return &#123;
+          get() &#123;
+            track() &#x2F;&#x2F;告诉Vue这个value值是需要被“追踪”的
+            return value
+          &#125;,
+          set(newValue) &#123;
+            clearTimeout(timer)
+            timer &#x3D; setTimeout(() &#x3D;&gt; &#123;
+              value &#x3D; newValue
+              trigger() &#x2F;&#x2F;告诉Vue去更新界面
+            &#125;, delay)
+          &#125;,
+        &#125;
+      &#125;)
+    &#125;
+    let keyword &#x3D; myRef(&#39;hello&#39;, 500) &#x2F;&#x2F;使用程序员自定义的ref
+    return &#123;
+      keyword,
+    &#125;
+  &#125;,
+&#125;
+&lt;&#x2F;script&gt;
+Copy to clipboardErrorCopied</code></pre></li>
+</ul>
+<h2 id="5-provide-与-inject"><a href="#5-provide-与-inject" class="headerlink" title="5.provide 与 inject"></a><a href="#_5provide-%E4%B8%8E-inject">5.provide 与 inject</a></h2><p><img src="https://v3.cn.vuejs.org/images/components_provide.png" alt="img" loading="lazy"></p>
+<ul>
+<li><p>作用：实现<strong>祖与后代组件间</strong>通信</p>
+</li>
+<li><p>套路：父组件有一个 <code>provide</code> 选项来提供数据，后代组件有一个 <code>inject</code> 选项来开始使用这些数据</p>
+</li>
+<li><p>具体写法：</p>
+<ol>
+<li><p>祖组件中：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token operator">...</span><span class="token operator">...</span>
+    <span class="token keyword">let</span> car <span class="token operator">=</span> <span class="token function">reactive</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">name</span><span class="token operator">:</span><span class="token string">'奔驰'</span><span class="token punctuation">,</span><span class="token literal-property property">price</span><span class="token operator">:</span><span class="token string">'40万'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token function">provide</span><span class="token punctuation">(</span><span class="token string">'car'</span><span class="token punctuation">,</span>car<span class="token punctuation">)</span>
+    <span class="token operator">...</span><span class="token operator">...</span>
+<span class="token punctuation">&#125;</span>Copy to clipboardErrorCopied</code></pre>
+</li>
+<li><p>后代组件中：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">setup</span><span class="token punctuation">(</span><span class="token parameter">props<span class="token punctuation">,</span>context</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token operator">...</span><span class="token operator">...</span>
+    <span class="token keyword">const</span> car <span class="token operator">=</span> <span class="token function">inject</span><span class="token punctuation">(</span><span class="token string">'car'</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>car<span class="token punctuation">&#125;</span>
+    <span class="token operator">...</span><span class="token operator">...</span>
+<span class="token punctuation">&#125;</span>Copy to clipboardErrorCopied</code></pre></li>
+</ol>
+</li>
+</ul>
+<h2 id="6-响应式数据的判断"><a href="#6-响应式数据的判断" class="headerlink" title="6.响应式数据的判断"></a><a href="#_6%E5%93%8D%E5%BA%94%E5%BC%8F%E6%95%B0%E6%8D%AE%E7%9A%84%E5%88%A4%E6%96%AD">6.响应式数据的判断</a></h2><ul>
+<li>isRef: 检查一个值是否为一个 ref 对象</li>
+<li>isReactive: 检查一个对象是否是由 <code>reactive</code> 创建的响应式代理</li>
+<li>isReadonly: 检查一个对象是否是由 <code>readonly</code> 创建的只读代理</li>
+<li>isProxy: 检查一个对象是否是由 <code>reactive</code> 或者 <code>readonly</code> 方法创建的代理</li>
+</ul>
+<h1 id="四、Composition-API-的优势"><a href="#四、Composition-API-的优势" class="headerlink" title="四、Composition API 的优势"></a><a href="#%E5%9B%9B%E3%80%81composition-api-%E7%9A%84%E4%BC%98%E5%8A%BF">四、Composition API 的优势</a></h1><h2 id="1-Options-API-存在的问题"><a href="#1-Options-API-存在的问题" class="headerlink" title="1.Options API 存在的问题"></a><a href="#_1options-api-%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98">1.Options API 存在的问题</a></h2><p>使用传统 OptionsAPI 中，新增或者修改一个需求，就需要分别在 data，methods，computed 里修改 。</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f84e4e2c02424d9a99862ade0a2e4114~tplv-k3u1fbpfcp-watermark.image" alt="img" loading="lazy"></p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e5ac7e20d1784887a826f6360768a368~tplv-k3u1fbpfcp-watermark.image" alt="img" loading="lazy"></p>
+<h2 id="2-Composition-API-的优势"><a href="#2-Composition-API-的优势" class="headerlink" title="2.Composition API 的优势"></a><a href="#_2composition-api-%E7%9A%84%E4%BC%98%E5%8A%BF">2.Composition API 的优势</a></h2><p>我们可以更加优雅的组织我们的代码，函数。让相关功能的代码更加有序的组织在一起。</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bc0be8211fc54b6c941c036791ba4efe~tplv-k3u1fbpfcp-watermark.image" alt="img" loading="lazy"></p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6cc55165c0e34069a75fe36f8712eb80~tplv-k3u1fbpfcp-watermark.image" alt="img" loading="lazy"></p>
+<h1 id="五、新的组件"><a href="#五、新的组件" class="headerlink" title="五、新的组件"></a><a href="#%E4%BA%94%E3%80%81%E6%96%B0%E7%9A%84%E7%BB%84%E4%BB%B6">五、新的组件</a></h1><h2 id="1-Fragment"><a href="#1-Fragment" class="headerlink" title="1.Fragment"></a><a href="#_1fragment">1.Fragment</a></h2><ul>
+<li>在 Vue2 中: 组件必须有一个根标签</li>
+<li>在 Vue3 中: 组件可以没有根标签, 内部会将多个标签包含在一个 Fragment 虚拟元素中</li>
+<li>好处: 减少标签层级, 减小内存占用</li>
+</ul>
+<h2 id="2-Teleport"><a href="#2-Teleport" class="headerlink" title="2.Teleport"></a><a href="#_2teleport">2.Teleport</a></h2><ul>
+<li><p>什么是 Teleport？—— <code>Teleport</code> 是一种能够将我们的<strong>组件 html 结构</strong>移动到指定位置的技术。</p>
+<pre class="language-vue" data-language="vue"><code class="language-vue">&lt;teleport to&#x3D;&quot;移动位置&quot;&gt;
+    &lt;div v-if&#x3D;&quot;isShow&quot; class&#x3D;&quot;mask&quot;&gt;
+        &lt;div class&#x3D;&quot;dialog&quot;&gt;
+            &lt;h3&gt;我是一个弹窗&lt;&#x2F;h3&gt;
+            &lt;button @click&#x3D;&quot;isShow &#x3D; false&quot;&gt;关闭弹窗&lt;&#x2F;button&gt;
+        &lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+&lt;&#x2F;teleport&gt;
+Copy to clipboardErrorCopied</code></pre></li>
+</ul>
+<h2 id="3-Suspense"><a href="#3-Suspense" class="headerlink" title="3.Suspense"></a><a href="#_3suspense">3.Suspense</a></h2><ul>
+<li><p>等待异步组件时渲染一些额外内容，让应用有更好的用户体验</p>
+</li>
+<li><p>使用步骤：</p>
+<ul>
+<li><p>异步引入组件</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span>defineAsyncComponent<span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'vue'</span>
+<span class="token keyword">const</span> Child <span class="token operator">=</span> <span class="token function">defineAsyncComponent</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token keyword">import</span><span class="token punctuation">(</span><span class="token string">'./components/Child.vue'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>Copy to clipboardErrorCopied</code></pre>
+</li>
+<li><p>使用<code>Suspense</code>包裹组件，并配置好<code>default</code> 与 <code>fallback</code></p>
+<pre class="language-vue" data-language="vue"><code class="language-vue">&lt;template&gt;
+  &lt;div class&#x3D;&quot;app&quot;&gt;
+    &lt;h3&gt;我是App组件&lt;&#x2F;h3&gt;
+    &lt;Suspense&gt;
+      &lt;template v-slot:default&gt;
+        &lt;Child &#x2F;&gt;
+      &lt;&#x2F;template&gt;
+      &lt;template v-slot:fallback&gt;
+        &lt;h3&gt;加载中.....&lt;&#x2F;h3&gt;
+      &lt;&#x2F;template&gt;
+    &lt;&#x2F;Suspense&gt;
+  &lt;&#x2F;div&gt;
+&lt;&#x2F;template&gt;
+Copy to clipboardErrorCopied</code></pre></li>
+</ul>
+</li>
+</ul>
+<h1 id="六、其他"><a href="#六、其他" class="headerlink" title="六、其他"></a><a href="#%E5%85%AD%E3%80%81%E5%85%B6%E4%BB%96">六、其他</a></h1><h2 id="1-全局-API-的转移"><a href="#1-全局-API-的转移" class="headerlink" title="1.全局 API 的转移"></a><a href="#_1%E5%85%A8%E5%B1%80api%E7%9A%84%E8%BD%AC%E7%A7%BB">1.全局 API 的转移</a></h2><ul>
+<li><p>Vue 2.x 有许多全局 API 和配置。</p>
+<ul>
+<li><p>例如：注册全局组件、注册全局指令等。</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//注册全局组件</span>
+Vue<span class="token punctuation">.</span><span class="token function">component</span><span class="token punctuation">(</span><span class="token string">'MyButton'</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+  <span class="token function-variable function">data</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">count</span><span class="token operator">:</span> <span class="token number">0</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">template</span><span class="token operator">:</span> <span class="token string">'&lt;button @click="count++">Clicked &#123;&#123; count &#125;&#125; times.&lt;/button>'</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment">//注册全局指令</span>
+Vue<span class="token punctuation">.</span><span class="token function">directive</span><span class="token punctuation">(</span><span class="token string">'focus'</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+  <span class="token function-variable function">inserted</span><span class="token operator">:</span> <span class="token parameter">el</span> <span class="token operator">=></span> el<span class="token punctuation">.</span><span class="token function">focus</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>Copy to clipboardErrorCopied</code></pre></li>
+</ul>
+</li>
+<li><p>Vue3.0 中对这些 API 做出了调整：</p>
+<ul>
+<li><p>将全局的 API，即：<code>Vue.xxx</code>调整到应用实例（<code>app</code>）上</p>
+<table>
+<thead>
+<tr>
+<th>2.x 全局 API（<code>Vue</code>）</th>
+<th>3.x 实例 API (<code>app</code>)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Vue.config.xxxx</td>
+<td>app.config.xxxx</td>
+</tr>
+<tr>
+<td>Vue.config.productionTip</td>
+<td><strong>移除</strong></td>
+</tr>
+<tr>
+<td>Vue.component</td>
+<td>app.component</td>
+</tr>
+<tr>
+<td>Vue.directive</td>
+<td>app.directive</td>
+</tr>
+<tr>
+<td>Vue.mixin</td>
+<td>app.mixin</td>
+</tr>
+<tr>
+<td>Vue.use</td>
+<td>app.use</td>
+</tr>
+<tr>
+<td>Vue.prototype</td>
+<td>app.config.globalProperties</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-其他改变"><a href="#2-其他改变" class="headerlink" title="2.其他改变"></a><a href="#_2%E5%85%B6%E4%BB%96%E6%94%B9%E5%8F%98">2.其他改变</a></h2><ul>
+<li><p>data 选项应始终被声明为一个函数。</p>
+</li>
+<li><p>过度类名的更改：</p>
+<ul>
+<li><p>Vue2.x 写法</p>
+<pre class="language-css" data-language="css"><code class="language-css"><span class="token selector">.v-enter,
+.v-leave-to</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">opacity</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token selector">.v-leave,
+.v-enter-to</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">opacity</span><span class="token punctuation">:</span> 1<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>Copy to clipboardErrorCopied</code></pre>
+</li>
+<li><p>Vue3.x 写法</p>
+<pre class="language-css" data-language="css"><code class="language-css"><span class="token selector">.v-enter-from,
+.v-leave-to</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">opacity</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token selector">.v-leave-from,
+.v-enter-to</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">opacity</span><span class="token punctuation">:</span> 1<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>Copy to clipboardErrorCopied</code></pre></li>
+</ul>
+</li>
+<li><p><strong>移除</strong>keyCode 作为 v-on 的修饰符，同时也不再支持<code>config.keyCodes</code></p>
+</li>
+<li><p><strong>移除</strong><code>v-on.native</code>修饰符</p>
+<ul>
+<li><p>父组件中绑定事件</p>
+<pre class="language-vue" data-language="vue"><code class="language-vue">&lt;my-component
+  v-on:close&#x3D;&quot;handleComponentEvent&quot;
+  v-on:click&#x3D;&quot;handleNativeClickEvent&quot;
+&#x2F;&gt;
+Copy to clipboardErrorCopied</code></pre>
+</li>
+<li><p>子组件中声明自定义事件</p>
+<pre class="language-vue" data-language="vue"><code class="language-vue">&lt;script&gt;
+export default &#123;
+  emits: [&#39;close&#39;],
+&#125;
+&lt;&#x2F;script&gt;
+Copy to clipboardErrorCopied</code></pre></li>
+</ul>
+</li>
+<li><p><strong>移除</strong>过滤器（filter）</p>
+<blockquote>
+<p>过滤器虽然这看起来很方便，但它需要一个自定义语法，打破大括号内表达式是 “只是 JavaScript” 的假设，这不仅有学习成本，而且有实现成本！建议用方法调用或计算属性去替换过滤器。</p>
+</blockquote>
+</li>
+<li><p>……</p>
+</li>
+</ul>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="Donate" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">I'm so cute. Please give me money.</div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author: </strong>嘟嘟噜</li><li class="post-copyright-link"><strong>Post link: </strong><a href="https://sakura10032.github.io/2022/06/02/vue3-x/" title="vue3.x 笔记分享">https://sakura10032.github.io/2022/06/02/vue3-x/</a></li><li class="post-copyright-license"><strong>Copyright Notice: </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> unless otherwise stated.</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2022/06/02/vue2-x/" rel="prev" title="vue2.x 笔记分享"><span class="icon iconify" data-icon="ri:arrow-left-s-line"></span><span class="post-nav-text">vue2.x 笔记分享</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2022/06/02/hello-world/" rel="next" title="Hello World"><span class="post-nav-text">Hello World</span><span class="icon iconify" data-icon="ri:arrow-right-s-line"></span></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>如果您有任何关于博客内容的相关讨论，欢迎前往 <a href="https://github.com/Sakura10032/sakura10032.github.io/discussions" target="_blank">GitHub Discussions</a> 与我交流。</span><br></div></div></main><footer class="sidebar-translate" id="footer"><div class="beian"><a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">苏ICP备19056589</a></div><div class="copyright"><span>&copy; 2018 – 2022 </span><span class="with-love" id="animate"><span class="icon iconify" data-icon="ri:cloud-line"></span></span><span class="author"> 嘟嘟噜</span></div><div class="powered"><span>Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> v6.2.0</span><span class="footer-separator">|</span><span>Theme - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.3</span></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></body></html>
